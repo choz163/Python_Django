@@ -1,6 +1,28 @@
 from django.db import models
 
 
+class Category(models.Model):
+    name = models.CharField(
+        max_length=100,
+        verbose_name="наименование",
+        help_text="Введите наименование категории",
+    )
+    description = models.TextField(
+        verbose_name="описание",
+        help_text="Введите краткое описание категории",
+        blank=True,
+        null=True,
+    )
+
+    class Meta:
+        verbose_name = "Категория"
+        verbose_name_plural = "Категории"
+        ordering = ["name", "description"]
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     name = models.CharField(
         max_length=100,
@@ -15,14 +37,10 @@ class Product(models.Model):
     )
     image = models.ImageField(
         upload_to="catalog/product_images",
-        blank=True,
-        null=True,
         verbose_name="изображение",
         help_text="Загрузите изображение продукта",
     )
-    category = models.CharField(
-        max_length=100, verbose_name="категория", help_text="Введите категорию товаров"
-    )
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     price = models.IntegerField(
         verbose_name="цена за покупку",
         help_text="Введите цену за покупку",
@@ -52,28 +70,6 @@ class Product(models.Model):
             "created_at",
             "updated_at",
         ]
-
-    def __str__(self):
-        return self.name
-
-
-class Category(models.Model):
-    name = models.CharField(
-        max_length=100,
-        verbose_name="наименование",
-        help_text="Введите наименование категории",
-    )
-    description = models.TextField(
-        verbose_name="описание",
-        help_text="Введите краткое описание категории",
-        blank=True,
-        null=True,
-    )
-
-    class Meta:
-        verbose_name = "Категория"
-        verbose_name_plural = "Категории"
-        ordering = ["name", "description"]
 
     def __str__(self):
         return self.name
