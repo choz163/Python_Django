@@ -29,6 +29,7 @@ class Product(models.Model):
         verbose_name="наименование",
         help_text="Введите наименование продукта",
     )
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.TextField(
         verbose_name="описание",
         help_text="Введите краткое описание продукта",
@@ -40,7 +41,6 @@ class Product(models.Model):
         verbose_name="изображение",
         help_text="Загрузите изображение продукта",
     )
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     price = models.IntegerField(
         verbose_name="цена за покупку",
         help_text="Введите цену за покупку",
@@ -49,6 +49,7 @@ class Product(models.Model):
     )
     created_at = models.DateField(
         max_length=20,
+        auto_now_add=True,
         verbose_name="дата создания",
         help_text="Введите дату создания заказа",
     )
