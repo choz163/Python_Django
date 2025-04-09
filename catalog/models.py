@@ -13,6 +13,13 @@ class Category(models.Model):
         blank=True,
         null=True,
     )
+    image = models.ImageField(
+        upload_to="catalog/category_images",
+        verbose_name="изображение",
+        help_text="Загрузите изображение продукта",
+        blank=True,
+        null=True
+    )
 
     class Meta:
         verbose_name = "Категория"

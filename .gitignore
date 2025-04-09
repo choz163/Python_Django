@@ -8,6 +8,8 @@ __pycache__/
 
 # Distribution / packaging
 .Python
+catalog/migrations/0002_category_image_alter_product_created_at.py
+media/
 build/
 develop-eggs/
 dist/
