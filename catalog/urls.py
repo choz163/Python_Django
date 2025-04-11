@@ -1,14 +1,16 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include
+from django.urls import path
 from catalog.apps import CatalogConfig
-from catalog.views import home, contacts, category_list, product_list
+from catalog.views import CategoryListView, CategoryDetailView, CategoryCreateView, CategoryUpdateView, CategoryDeleteView
 
 app_name = CatalogConfig.name
 
 
 urlpatterns = [
-    path ('contacts', contacts, name='contacts'),
-    path ('base', category_list, name='category_list'),
-    path ('product/<int:pk>', product_list, name='product_list')
+    path ('base/', CategoryListView.as_view(), name='category_list'),
+    path ('category/<int:pk>', CategoryDetailView.as_view(), name='category_list'),
+    path ('catalog/create/', CategoryCreateView.as_view(), name='category_create'),
+    path ('catalog/<int:pk>/update/', CategoryUpdateView.as_view(), name='category_update'),
+    path ('catalog/<int:pk>/delete/', CategoryDeleteView.as_view(), name='category_delete'),
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

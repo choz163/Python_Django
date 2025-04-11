@@ -1,0 +1,12 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="my-4">{{ post.title }}</h2>
+        <p>{{ post.content }}</p>
+        <p><small>Опубликовано {{ post.created_at|date:"d M Y" }}</small></p>
+        <a class="btn btn-secondary" href="{% url 'blog:post_list' %}">Назад к списку</a>
+        <a class="btn btn-warning" href="{% url 'blog:post_edit' post.id %}">Редактировать</a>
+        <a class="btn btn-danger" href="{% url 'blog:post_confirm_delete' post.id %}">Удалить</a>
+    </div>
+{% endblock %}

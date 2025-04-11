@@ -1,0 +1,81 @@
+{% load static %}
+
+<html lang="ru" data-bs-theme="auto">
+<head>
+    <script src="{% static 'js/color-modes.js' %}"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Блог о технологиях и программировании">
+    <meta name="author" content="Ваше Имя">
+    <title>Блог - Ваше название</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="{% static 'img/favicons/apple-touch-icon.png' %}" sizes="180x180">
+    <link rel="icon" href="{% static 'img/favicons/favicon-32x32.png' %}" sizes="32x32" type="image/png">
+    <link rel="icon" href="{% static 'img/favicons/favicon-16x16.png' %}" sizes="16x16" type="image/png">
+    <link rel="icon" href="{% static 'img/favicons/favicon.ico' %}">
+    <meta name="theme-color" content="#712cf9">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+    </style>
+</head>
+<body>
+    <header data-bs-theme="dark">
+        {% include 'includes/inc_menu.html' %}
+    </header>
+
+    <main>
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">Добро пожаловать в наш блог</h1>
+                    <p class="lead text-body-secondary">Здесь вы найдете статьи о технологиях и программировании.</p>
+                    <p>
+                        <a class="btn btn-primary" href="{% url 'blog:post_create' %}" role="button">Создать новый пост</a>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="text-body-secondary py-5">
+        <div class="container">
+            <p class="float-end mb-1">
+                <a href="#">Наверх</a>
+            </p>
+            <p class="mb-1">&copy; Ваше имя, 2025. Все права защищены.</p>
+            <p class="mb-0">Новый в нашем блоге? <a href="/">Посетите главную страницу</a>.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
+</html>
