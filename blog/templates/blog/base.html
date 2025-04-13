@@ -45,9 +45,9 @@
     </style>
 </head>
 <body>
-    <header data-bs-theme="dark">
-        {% include 'includes/inc_menu.html' %}
-    </header>
+<header data-bs-theme="dark">
+    {% include 'includes/inc_menu.html' %}
+</header>
 
     <main>
         <section class="py-5 text-center container">
@@ -56,7 +56,7 @@
                     <h1 class="fw-light">Добро пожаловать в наш блог</h1>
                     <p class="lead text-body-secondary">Здесь вы найдете статьи о технологиях и программировании.</p>
                     <p>
-                        <a class="btn btn-primary" href="{% url 'blog:post_create' %}" role="button">Создать новый пост</a>
+                        <a class="btn btn-primary" href="{% url 'blog:post_list' %}" role="button">Блог</a>
                     </p>
                 </div>
             </div>

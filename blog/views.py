@@ -1,10 +1,11 @@
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
 
 class PostListView(ListView):
     model = Post
     template_name = 'blog/post_list.html'
+    context_object_name = 'posts'
 
     def get_queryset(self):
         return Post.objects.filter(is_published=True)
@@ -24,6 +25,9 @@ class PostCreateView(CreateView):
     template_name = 'blog/post_form.html'
     fields = ['title', 'content', 'preview_image', 'is_published']
     success_url = reverse_lazy('blog:post_list')
+
+    def get_success_url(self):
+        return reverse('blog:post_detail', kwargs={'pk': self.object.pk})
 
 class PostUpdateView(UpdateView):
     model = Post
