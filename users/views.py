@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, LogoutView
@@ -16,7 +17,7 @@ class RegisterView(CreateView):
         send_mail(
             subject='Добро пожаловать!',
             message=f'Привет, {user.email}! Спасибо за регистрацию.',
-            from_email=None,
+            from_email=settings.EMAIL_HOST_USER,
             recipient_list=[user.email],
         )
         return response
