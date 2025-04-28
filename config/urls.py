@@ -8,4 +8,5 @@ urlpatterns = [
     path('', RedirectView.as_view(url='blog/base', permanent=False)),
     path('', include('catalog.urls', namespace="catalog")),
     path('blog/', include('blog.urls', namespace="blog")),
+    path('users/', include('users.urls', namespace='users')),
 ]
