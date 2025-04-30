@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
 print(os.environ.get('DATABASE_URL'))
 
@@ -30,11 +31,9 @@ INSTALLED_APPS = [
 
 ]
 
-AUTH_USER_MODEL = 'users.User'
-
 LOGIN_URL = 'users:login'
-LOGIN_REDIRECT_URL = 'catalog:product_list'
-LOGOUT_REDIRECT_URL = 'catalog:product_list'
+LOGIN_REDIRECT_URL = 'users:login'
+LOGOUT_REDIRECT_URL = 'users:logout'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'

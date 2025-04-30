@@ -13,7 +13,6 @@ class RegisterView(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
         user = form.save()
-        # Отправка приветственного письма
         send_mail(
             subject='Добро пожаловать!',
             message=f'Привет, {user.email}! Спасибо за регистрацию.',
@@ -27,4 +26,4 @@ class CustomLoginView(LoginView):
     template_name = 'users/login.html'
 
 class CustomLogoutView(LogoutView):
-    pass
+    next_page = reverse_lazy('users:login')
