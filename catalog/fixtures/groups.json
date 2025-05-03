@@ -1,0 +1,25 @@
+[
+  {
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+      "name": "ProductManagers",
+      "permissions": [
+        ["add_product",  "catalog", "product"],
+        ["change_product","catalog", "product"],
+        ["delete_product","catalog", "product"],
+        ["view_product",  "catalog", "product"]
+      ]
+    }
+  },
+  {
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+      "name": "ProductViewers",
+      "permissions": [
+        ["view_product", "catalog", "product"]
+      ]
+    }
+  }
+]
