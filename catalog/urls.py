@@ -2,7 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 from catalog.apps import CatalogConfig
-from catalog.views import CategoryListView, CategoryDetailView, CategoryCreateView, CategoryUpdateView, CategoryDeleteView, ProductDetailView, ProductListView, ProductCreateView, ProductUpdateView, ProductDeleteView
+from catalog.views import CategoryListView, CategoryDetailView, CategoryCreateView, CategoryUpdateView, CategoryDeleteView, ProductDetailView, ProductListView, ProductCreateView, ProductUpdateView, ProductDeleteView, ProductsByCategoryView
 from . import views
 
 
@@ -22,5 +22,6 @@ urlpatterns = [
     path('product/<int:pk>/update/', ProductUpdateView.as_view(), name='product_update'),
     path('product/<int:pk>/delete/', ProductDeleteView.as_view(), name='product_delete'),
     path('unpublish/<int:pk>', views.unpublish_product, name='unpublish'),
+    path('products/<slug:slug>',ProductsByCategoryView.as_view(),name='products_by_category'),
 
 ] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,10 +1,14 @@
 from django.urls import reverse_lazy
+from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from catalog.models import Category, Product
 from catalog.forms import ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404, redirect
+from django.utils.decorators import method_decorator
+from django.core.cache import cache
+from catalog.services import get_products_by_category
 
 
 class CategoryListView(ListView):
@@ -37,13 +41,21 @@ class CategoryDeleteView(DetailView):
     success_url = reverse_lazy('catalog:category_list')
 
 
-# Новые контроллеры для продуктов
 class ProductListView(ListView):
     model = Product
     template_name = 'catalog/product_list.html'
     context_object_name = 'products'
 
+    def get_queryset(self):
+        key = 'all_products'
+        products = cache.get(key)
+        if products is None:
+            products = list(Product.objects.filter(status=True).select_related('category'))
+            cache.set(key, products, 60 * 15)
+        return products
 
+
+@method_decorator(cache_page(60*15), name='dispatch')
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
     template_name = 'catalog/product_detail.html'
@@ -81,6 +93,21 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         user = self.request.user
         product = self.get_object()
         return (product.owner == user) or user.has_perm('products.delete_product')
+
+
+class ProductsByCategoryView(ListView):
+    model = Product
+    template_name = 'catalog/products_by_category.html'
+    context_object_name = 'products'
+
+
+    def get_queryset(self):
+        return get_products_by_category(self.kwargs['slug'])
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['category'] = get_object_or_404(Category, slug=self.kwargs['slug'])
+        return ctx
 
 @login_required
 @permission_required('products.can_unpublish_product', raise_exception=True)
