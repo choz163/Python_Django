@@ -21,6 +21,12 @@ class Category(models.Model):
         blank=True,
         null=True
     )
+    slug = models.SlugField(
+        max_length=50,
+        unique=True,
+        null=True,
+        blank=True
+    )
 
     class Meta:
         verbose_name = "Категория"
@@ -37,7 +43,7 @@ class Product(models.Model):
         verbose_name="наименование",
         help_text="Введите наименование продукта",
     )
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     description = models.TextField(
         verbose_name="описание",
         help_text="Введите краткое описание продукта",
@@ -74,6 +80,7 @@ class Product(models.Model):
         on_delete=models.CASCADE,
         related_name='products'
     )
+
 
     class Meta:
         verbose_name = "Подукт"

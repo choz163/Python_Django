@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-
+from decouple import config
 from dotenv import load_dotenv
 print(os.environ.get('DATABASE_URL'))
 
@@ -8,6 +8,18 @@ load_dotenv(override=True)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+REDIS_URL = config('REDIS_URL', default='redis://127.0.0.1:6379/1')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': REDIS_URL,
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+        'KEY_PREFIX': 'catalog'
+    }
+}
 
 
 SECRET_KEY = os.getenv("SECRET_KEY")
